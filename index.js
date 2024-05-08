@@ -28,6 +28,9 @@ const DESTINATION_DIR = core.getInput('destination_dir', {
 const ENDPOINT = core.getInput('endpoint', {
   required: false,
 });
+const ACL = core.getInput('acl', {
+  required: false,
+});
 
 const s3options = {
   accessKeyId: AWS_ACCESS_KEY_ID,
@@ -66,10 +69,10 @@ function run() {
       );
       const params = {
         Bucket: BUCKET,
-        ACL: 'public-read',
         Body: fileStream,
         Key: bucketPath,
         ContentType: lookup(p.path) || 'text/plain',
+        ...(ACL && { ACL }),
       };
       return upload(params);
     })
