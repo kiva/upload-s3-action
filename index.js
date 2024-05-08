@@ -7,11 +7,14 @@ const slash = require('slash').default;
 const klawSync = require('klaw-sync');
 const { lookup } = require('mime-types');
 
-const AWS_KEY_ID = core.getInput('aws_key_id', {
+const AWS_ACCESS_KEY_ID = core.getInput('aws_access_key_id', {
   required: true,
 });
 const SECRET_ACCESS_KEY = core.getInput('aws_secret_access_key', {
   required: true,
+});
+const AWS_REGION = core.getInput('aws_region', {
+  required: true
 });
 const BUCKET = core.getInput('aws_bucket', {
   required: true,
@@ -27,8 +30,9 @@ const ENDPOINT = core.getInput('endpoint', {
 });
 
 const s3options = {
-  accessKeyId: AWS_KEY_ID,
+  accessKeyId: AWS_ACCESS_KEY_ID,
   secretAccessKey: SECRET_ACCESS_KEY,
+  region: AWS_REGION,
 };
 
 if (ENDPOINT) {
